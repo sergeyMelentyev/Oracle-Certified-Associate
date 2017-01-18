@@ -4,11 +4,30 @@ package com.oca.sert;	// must be on top, only one statement will compile
 
 import static com.oca.sert.ClassName.*;	// import all public static members from OTHER package
 
+/* ACCESS MODIFIER */
 // top-level class and interface camnnot have defined with protected and private access
 // method parameters and local vars cannot be defined using explicit access modifiers
 public;	// can be accessed from everywere, different package and not derived classes
 protected;	// cannot be accessed from not derived class in different package. Derived class must be public
 default;	// access only from the same package
+
+/* ABSTRACT MODIFIER */
+// none of the different types of variable can be defined as abstract, will not compile
+abstract class ClassName {}	// cannot be instantiated, may not containe any abstract methods
+interface InterfaceName {}	// abstract keyword is allowed but redundant
+
+/* FINAL MODIFIER */
+// class, method or variable can be final. Cannot be used with the declaration of an interface
+final class ClassName {}	// cannot be extended
+final int i;	// val assigne once via declaration or in constructor calling methods that change its state
+final methodName() {}	// cannot be overridden by a derived class
+
+/* STATIC MODIFIER */
+// class, method (not top level), variable or interface (not top level) can be static. 
+// nonprivate static vars and methods can be inherited, cannot be overrided but can be redefined
+static int i;	// shared with all instances, can be accessed when no instances have been created
+static void methodName(){}	// cannot access instance vars, only static.
+ClassName name = null; name.staticVarName;	// can access static var and methods using null reference
 
 import java.util.Date; import java.sql.Date;	// import both classes in the same class will not compile
 
@@ -37,6 +56,9 @@ class ClassName {
 		this.name = name;
 	}
 }
+
+
+
 
 
 interface InterfaceName {
