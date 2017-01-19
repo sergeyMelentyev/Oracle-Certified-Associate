@@ -48,6 +48,20 @@ static int i;	// shared with all instances, can be accessed when no instances ha
 static void methodName(){}	// cannot access instance vars, only static.
 ClassName name = null; name.staticVarName;	// can access static var and methods using null reference
 
+/* PRIMITIVE DATA TYPE */
+Numetic; Signed; Integers; byte, short, int, long;	// byte -128 to 127 inclusive
+Numetic; Signed; Floating-Point; float, double;
+Numetic; Unsigned; Character; char;	// only positive
+Boolean; boolean;
+int octal = 0413; int hex = 0x10B; int binary = 0b10010;
+int octal = 04_13; int hex = 0x10_BA_75; int binary = 0b1_0000_10;	// valid literal values
+
+
+
+
+
+
+
 class ClassName {
 	String name;	// instance variable will save state for only one specific object
 	ClassName (String name){
@@ -60,3 +74,7 @@ interface InterfaceName {
 	static methodName(){};
 	default methodName(){};
 }
+
+
+
+
