@@ -94,7 +94,7 @@ ClassName className = new ClassName();	// Type of obj reference var, name of obj
 
 /* WRAPPER CLASSES. IMMUTABLE OBJ */
 // Object -> Boolean, Character
-// Object -> Number -> Byte, Chort, Integer, Long, Float, Double
+// Object -> Number -> Byte, Short, Integer, Long, Float, Double
 Boolean bool = true; Byte b = 10;	// autoboxing
 Boolean bool = new Boolean(true); Byte b = new Byte((byte)10);	// constructor with primitive values
 Boolean bool = new Boolean("true"); Byte b = new Byte("10");	// constructor with string values
@@ -102,6 +102,22 @@ Boolean bool = Boolean.valueOf(true); Byte b = Byte.valueOf(10);	// static mehod
 booleanValue(); charValue(); byteValue();	// retreive primitive value
 parseBoolean(String s); parseByte(String s);	// get primitive val from string, EXEPT for Character
 // all parse methods throws NumberFormat-Exception except Boolean.parseBoolean(), that returns false
+
+Boolean bool;	// cached instance exist for the values true and false
+Character ch;	// cached instance exist for the values 0 to 127
+Byte, Short, Integer, Long;	// cached instance exist for the values -128 to 127
+Integer iOne = new Integer(10);	// always create new instances (no cached values)
+Integer iTwo = Integer.valueOf(10);	// returns a cached copy (-128 to 127 range, exept for float and double)
+
+
+
+/* COMPARISON */
+public boolean equals(Object obj); // compare primitive value stored by a wrapper class
+public int compareTo(Double value);	// indicates whether some other object is "equal to" this one
+objOne == objTwo;	// compare obj reference only with same obj wrapper class, or will not compile
+
+
+
 
 
 class ClassName {
