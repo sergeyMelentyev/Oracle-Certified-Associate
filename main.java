@@ -118,6 +118,32 @@ objOne == objTwo;	// compare obj reference only with same obj wrapper class, or 
 
 
 
+/* CLASSES. METHODS */
+// overloaded methods: same name, different method agr list, any return value, any access level
+void methodName(int...days) {	// only one varargs in a perameter, must be last, it works like an array
+	for (int i = 0; i < days.length; i++)
+		System.out.println(days[i]);
+}
+
+
+
+/* CLASSES. CONSTRUCTORS */
+class ClassName {
+	String name; int i;	// instance variables or object fields
+
+	static { int i; }	// static initialization block, will be executed first
+	{ int i; }	// initializtion block, will be executed second
+
+	ClassName() {	// invokes constructor that accepts two args, will be executed last
+		this(null, 0);	// MUST BE the first statement in constructor
+	}
+	ClassName(String s, int i) {	// overloaded constructor, will be executed last
+		this.name = s; this.i = i; 
+	}
+	
+	
+}
+
 
 
 class ClassName {
@@ -131,3 +157,4 @@ interface InterfaceName {
 	static methodName(){};
 	default methodName(){};
 }
+
