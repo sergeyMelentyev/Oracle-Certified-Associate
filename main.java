@@ -146,15 +146,10 @@ class ClassName {
 
 
 
-class ClassName {
-	String name;	// instance variable will save state for only one specific object
-	ClassName (String name){
-		this.name = name;
-	}
-}
+
+
 
 interface InterfaceName {
 	static methodName(){};
 	default methodName(){};
 }
-
