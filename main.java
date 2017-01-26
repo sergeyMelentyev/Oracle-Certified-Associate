@@ -206,3 +206,27 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {}
 StringBuilder sb = new StringBuilder(); // StringBuilder() { val = new char[16]; }
 StringBuilder sb = new StringBuilder(""); // StringBuilder(String s) { val = new char[s.length() + 16]; }
 
+StringBuilder append(Object obj); // String, StringBuffer, CharSequence, char[], boolean, char, int...
+StringBuilder append(CharSequence s, int start, int end);
+StringBuilder append(char[] str, int offset, int len);
+
+StringBuilder insert(int index, char[] str, int offset, int len);
+StringBuilder insert(int offset, Object obj); // String, char[], CharSequence, boolean, char, int...
+
+StringBuilder delete(int start, int end); StringBuilder deleteCharAt(int index); // not included end pos
+
+StringBuilder reverse();	// sequence will be replaced by the reverse of the sequence
+
+StringBuilder replace(int start, int end, String str);	// not included end pos
+CharSequence subSequence(int start, int end);	// does not modify existing value
+/* STRINGBUFFER MUTABLE OBJECT WITH SYNCHRONIZED METHODS */
+
+
+
+/* ARRAY IMMUTABLE OBJECT */
+// arr of objs stores a collection of heap-memory addresses or pointers
+String[] arr = new String[2];	// array allocation with size, cannot expend or reduce
+String[] arr = new String[] {"", ""};	// arr declaration, allocation and initialization
+String[] arr = {"", ""};
+
+
