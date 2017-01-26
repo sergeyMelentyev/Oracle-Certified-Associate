@@ -118,7 +118,7 @@ objOne == objTwo;	// compare obj reference only with same obj wrapper class, or 
 
 
 
-/* CLASSES. METHODS */
+/* CLASSES. METHODS. CHAINED METHODS EVALS FROM LEFT TO RIGHT */
 // overloaded methods: same name, different method agr list, any return value, any access level
 void methodName(int...days) {	// only one varargs in a perameter, must be last, it works like an array
 	for (int i = 0; i < days.length; i++)
@@ -140,16 +140,69 @@ class ClassName {
 	ClassName(String s, int i) {	// overloaded constructor, will be executed last
 		this.name = s; this.i = i; 
 	}
-	
-	
 }
-
-
-
-
 
 
 interface InterfaceName {
 	static methodName(){};
 	default methodName(){};
 }
+
+
+
+/* STRING IMMUTABLE OBJECT */
+public final class String extends Object implements Serializable, Comparable<String>, CharSequence {}
+// store value in fixed size, private final char[] value;
+
+static String format(String format, Object... args);
+static String valueOf(Object obj);	// return str representation of the obj arg
+static String valueOf(char[] data, int offset, int count);
+String intern();	// return str with the same content, guaranteed to be from a pool of unique strs
+
+// overloaded String constructor can accept char array, StringBuiler and StringBuffer objects
+char[] c = new char[]{'s'}; String strOne = new String(c);
+StringBuilder sb = new StringBuilder("s"); String strOne = new String(sb);
+StringBuffer sb = new StringBuffer("s"); String strOne = new String(sb);
+
+int length(); boolean isEmpty();
+String toLowerCase(); String toUpperCase();
+int indexOf(int ch); int indexOf(int ch, int fromIndex);
+int indexOf(String subStr); int indexOf(String subStr, int fromIndex);
+int lastIndexOf(int ch); int lastIndexOf(int ch, int fromIndex);
+int lastIndexOf(String str); int lastIndexOf(String str, int fromIndex);
+char charAt(int i);
+void getChars(int srcBegin, int srcEnd, char[] dst, int dstBegin);	// copies chars into new char array
+
+boolean equals(Object arg); boolean equalsIgnoreCase(String arg); // true if same sequence of chars
+boolean contentEquals(CharSequence arg);	// CharBuffer, Segment, String, StringBuffer, StringBuilder
+boolean contains(CharSequence s);	// true if this str contains the specified sequence of chars
+int compareTo(String arg);	// 0 if equals, -1 if str < arg (lexicographically), 1 if str > arg
+int compareToIgnoreCase(String str);	// compares 2 strs lexicographically, ignoring case differences
+
+boolean regionMatches(int toffset, String other, int ooffset, int len);	// substring compare
+boolean regionMatches(boolean ignoreCase, int toffset, String other, int ooffset, int len);
+boolean startsWith(String prefix); boolean startsWith(String prefix, int toffset);
+boolean endsWith(String suffix);
+
+String substring(int beginI); String substring(int beginI, int endI); // new str, endIndex not included
+String concat(String str);	// concatenates the specified string to the end of this string
+String replace(char oldChar, char newChar);	// new str resulting from replacing oldChar with newChar
+String replace(CharSequence target, CharSequence replacement);
+String trim();	// returns a copy of the st, with no leading and trailing whitespace
+
+String toString(); char[] toCharArray();
+
+// string comparison
+String strOne = new String("s"); String strTwo = new String("s");	// create new Str obj not pooled
+strOne == strTwo;	// false, compares the addresses of the objects
+String strOne = "s"; String strTwo = "s";	// initialize new Str obj and store in a str pool
+strOne == strTwo;	// true
+
+
+
+/* STRINGBUILDER MUTABLE OBJECT */
+abstract class AbstractStringBuilder implements Appendable, CharSequence {}
+// store value in none fixed size, char[] value; int count;
+StringBuilder sb = new StringBuilder(); // StringBuilder() { val = new char[16]; }
+StringBuilder sb = new StringBuilder(""); // StringBuilder(String s) { val = new char[s.length() + 16]; }
+
