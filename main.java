@@ -282,3 +282,29 @@ void sort(Comparator<? super E> c); // sorts list according to the order induced
 
 ArrayList<String> arr = new ArrayList<>();
 ListIterator<String> iter = arr.listIterator(); while (iter.hasNext()) { iterator.next(); }
+
+
+
+/* DATE IMMUTABLE OBJECT, THREAD SAFE */
+final class LocalDate extends Object implements Temporal,TemporalAdjuster,ChronoLocalDate,Serializable {}
+LocalDate d = LocalDate.of(2017, 01, 27); LocalDate.of(2017, Month.JANUARY, 27);
+LocalDate d = LocalDate.now(); LocalDate.parse("2017-01-27");	// current, only two digits vals xxxx-XX-XX
+d.getDayOfMonth(); d.getDayOfWeek(); d.getDayOfYear(); d.getMonth(); d.getMonthValue(); d.getYear();
+d.minusDays(long); d.minusMonths(long); d.minusWeeks(long); d.minusYears(long);	// d.plusXXX(long);
+boolean	isAfter(ChronoLocalDate other);	// checks if this date is after the specified date
+boolean	isBefore(ChronoLocalDate other);	//checks if this date is before the specified date
+
+final class LocalTime extends Obj implements Temporal,TemporalAdjuster,Comparable<LocalTime>,Serializable {}
+LocalTime d = LocalTime.of(120, 12);	// hh,mm; hh,mm,ss; hh,mm,ss,ns;
+LocalTime d = LocalTime.now(); LocalDate.parse("15:08:23");	// 00-23 hours time standard, only two digits
+d.getHour(); d.getMinute(); d.getSecond(); d.getNano();
+d.minusHours(long); d.minusMinutes(long); d.minusSeconds(long); d.minusNanos(long);	// d.plusXXX(long);
+boolean	isAfter(LocalTime other);	// checks if this time is after the specified time
+boolean	isBefore(LocalTime other);	// checks if this time is before the specified time
+
+final class LocalDateTime implements Temporal,TemporalAdjuster,ChronoLocalDateTime<LocalDate>,Serializable{}
+
+final class Period extends Object implements ChronoPeriod, Serializable {}
+// can be negative
+
+final class DateTimeFormatter extends Object {}
