@@ -120,6 +120,7 @@ objOne == objTwo;	// compare obj reference only with same obj wrapper class, or 
 
 /* CLASSES. METHODS. CHAINED METHODS EVALS FROM LEFT TO RIGHT */
 // overloaded methods: same name, different method agr list, any return value, any access level
+// overridden methods: same name, same method arg list, different method body
 void methodName(int...days) {	// only one varargs in a perameter, must be last, it works like an array
 	for (int i = 0; i < days.length; i++)
 		System.out.println(days[i]);
@@ -224,9 +225,60 @@ CharSequence subSequence(int start, int end);	// does not modify existing value
 
 
 /* ARRAY IMMUTABLE OBJECT */
+public class Arrays extends Object {}
 // arr of objs stores a collection of heap-memory addresses or pointers
 String[] arr = new String[2];	// array allocation with size, cannot expend or reduce
 String[] arr = new String[] {"", ""};	// arr declaration, allocation and initialization
 String[] arr = {"", ""};
 
+MyInterface[] arr = new MyInterface[obj];	// null or obj that implement the relevant interface type
+MyAbsClass[] arr = new MyAbsClass[obj];	// null or obj that extends the relevant abstract class
+Object[] arr = new Object[new MyClass(), null, new Integer[7]];	// any data type
 
+static void sort(int[] a);	// ascending, any array data type
+static void sort(int[] a, int fromIndex, int toIndex);
+
+static boolean equals(int[] a, int[] b);	// any data type, elem1.equals(elem2), same size
+static boolean deepEquals(Object[] a1, Object[] a2);	// use with nested arrays of arbitrary depth
+
+static void fill(int[] a, int val);	// fill arr with val, any data type
+static void fill(int[] a, int fromIndex, int toIndex, int val);
+
+static int[] copyOf(int[] original, int newLength);	// copy array, truncating or padding with zeros
+static int[] copyOfRange(int[] original, int from, int to);	// copy specified range into a new array
+
+static <T>List<T> asList(T... a);	// returned list is serializable and implements RandomAccess
+static String toString(int[] a);	// string representation
+static String deepToString(Object[] a);	// use with nested arrays of arbitrary depth
+
+
+
+/* COLLECTION. ARRAYLIST MUTABLE OBJECT*/
+class ArrayList<E> extends AbstractList<E> implements List<E>, RandomAccess, Cloneable, Serializable {}
+// size(), isEmpty(), get(), set(), iterator(), listIterator() run in constant time
+// add() runs in amortized constant time, adding n elements requires O(n) time, all of other linear time
+int	size(); boolean	isEmpty(); void clear(); Object[] toArray(); boolean contains(Object o);
+
+boolean	add(E e); void add(int index, E elem);	// append at the end or inserts at the specified position
+boolean	addAll(Collection<? extends E> c); boolean addAll(int i, Collection<? extends E> c);	// collection
+
+E remove(int index);	// removes the element at the specified position in this list
+boolean	remove(Object o);	// removes the first occurrence of the specified element from this list
+boolean	removeAll(Collection<?> c); // removes from this list all elems from the specified collection
+Object clone();	// returns a shallow copy of this ArrayList instance, objects will stay the same
+
+E set(int index, E element); // replace elem at the specified position with the specified element
+
+void ensureCapacity(int minCapacity);	// increases the capacity of this ArrayList instance
+
+void forEach(Consumer<? super E> action); // performs action for each element of the Iterable
+E get(int index);	// get elem at position
+int	indexOf(Object o);	// returns the index of the first occurrence of the specified element
+int	lastIndexOf(Object o);	// returns the index of the last occurrence
+
+Iterator<E>	iterator();	// returns an iterator over the elements in this list in proper sequence
+ListIterator<E>	listIterator(); // returns a list iterator over the elements in this list
+void sort(Comparator<? super E> c); // sorts list according to the order induced by the comparator
+
+ArrayList<String> arr = new ArrayList<>();
+ListIterator<String> iter = arr.listIterator(); while (iter.hasNext()) { iterator.next(); }
