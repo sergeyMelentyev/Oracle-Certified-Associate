@@ -308,3 +308,14 @@ final class Period extends Object implements ChronoPeriod, Serializable {}
 // can be negative
 
 final class DateTimeFormatter extends Object {}
+
+
+
+/* CONTROL FLOW */
+final int i;
+switch() {	// char, byte, short, int, String, Integer, Short, Byte, Character, enum, must not be null
+	case 1*1: /*logic here*/ ; break;	// expression allowed, must be compile time constants
+	case i+i: /*logic here*/ ; break;	// allowed
+}	
+
+for (int i = 0; i < arr.length(); ++i, methodName()) {}	// increment block can call methods
