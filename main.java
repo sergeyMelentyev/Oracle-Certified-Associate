@@ -128,7 +128,10 @@ void methodName(int...days) {	// only one varargs in a perameter, must be last, 
 
 
 
-/* CLASSES. CONSTRUCTORS */
+/* CLASSES */
+// all top level java types (classes, enums, interfaces) can be declared only public or default
+// can implement interfaces with same method name if - same signature or form an overloaded set of methods
+// must override default implementation of the same named DEFAULT methods in several implemented interfaces
 class ClassName {
 	String name; int i;	// instance variables or object fields
 
@@ -144,8 +147,21 @@ class ClassName {
 }
 
 
-interface InterfaceName {
-	static methodName(){};
+
+/* CLASSES. INHERITANCE */
+// derived class does not inherit private members, default access members if super class in separate package
+// does not inherit constructors of the super class
+
+
+
+
+
+/* CLASSES. INTERFACES */
+// can define the default implementation for its methods and static methods, cannot be instantiated
+// members are vars, methods, inner interfaces, inner classes. Only public and default access
+interface InterfaceName {	// all methods and vars are implicitly public
+	static final int i;
+	static methodName(){};	// can be accessed as InterfaceName.methodName or by name of implemented class
 	default methodName(){};
 }
 
@@ -319,3 +335,5 @@ switch() {	// char, byte, short, int, String, Integer, Short, Byte, Character, e
 }	
 
 for (int i = 0; i < arr.length(); ++i, methodName()) {}	// increment block can call methods
+
+
