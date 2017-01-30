@@ -118,20 +118,8 @@ objOne == objTwo;	// compare obj reference only with same obj wrapper class, or 
 
 
 
-/* CLASSES. METHODS. CHAINED METHODS EVALS FROM LEFT TO RIGHT */
-// overloaded methods: same name, different method agr list, any return value, any access level
-// overridden methods: same name, same method arg list, different method body
-void methodName(int...days) {	// only one varargs in a perameter, must be last, it works like an array
-	for (int i = 0; i < days.length; i++)
-		System.out.println(days[i]);
-}
-
-
-
 /* CLASSES */
-// all top level java types (classes, enums, interfaces) can be declared only public or default
-// can implement interfaces with same method name if - same signature or form an overloaded set of methods
-// must override default implementation of the same named DEFAULT methods in several implemented interfaces
+// all top level types (classes, enums, interfaces) can be declared only public or default
 class ClassName {
 	String name; int i;	// instance variables or object fields
 
@@ -148,22 +136,127 @@ class ClassName {
 
 
 
+/* CLASSES. METHODS. CHAINED METHODS EVALS FROM LEFT TO RIGHT */
+// overloaded methods: same name, different method agr list, any return value, any access level
+// overridden methods: same name, same method arg list, different method body
+void methodName(int...days) {	// only one varargs in a perameter, must be last, it works like an array
+	for (int i = 0; i < days.length; i++)
+		System.out.println(days[i]);
+}
+
+
+
 /* CLASSES. INHERITANCE */
 // derived class does not inherit private members, default access members if super class in separate package
 // does not inherit constructors of the super class
 
+// can implement 2+ interfaces with static methods, does not matter same name or signature or return type
 
+// can implement 2+ interfaces with same constant name if call to these values is not ambiguous
+interface Jump { int MIN = 10; } 
+interface Move { int MIN = 10; }	// same constant name
+class ClassName implements Jump, Move {}	// will compile, no ambiguous implicit refarence to MIN const
+class ClassName implements Jump, Move { ClassName() { int i = MIN; } }	// will not compile, is ambiguous
+class ClassName implements Jump, Move { ClassName() { int i = Jump.MIN; } }	// will compile
+
+// can implement 2+ interfaces with same method names if same signature or form an overloaded set of methods
+interface Jump { String methodName(); } 
+interface Move { void methodName(); }	// return value differ
+class ClassName implements Jump, Move { String methodName() { return ""; } }	// will not compile
+
+// must override default implementation of the same named DEFAULT methods in 2+ implemented interfaces
+interface Jump { default void methodName() {;} } 
+interface Move { default void methodName() {;} }	// same default methods
+class ClassName implements Jump, Move {}	// will not compile
+class ClassName implements Jump, Move { void methodName() {;} }	// will compile
 
 
 
 /* CLASSES. INTERFACES */
+// cannot define constructors
 // can define the default implementation for its methods and static methods, cannot be instantiated
 // members are vars, methods, inner interfaces, inner classes. Only public and default access
+
+// can extend 2+ interfaces with static methods, does not matter same name or signature or return type
+
+// interface can extend 2+ interfaces with same abstruct method names ONLY without methods body
+interface InterfaceOne { String getName(); }
+interface InterfaceTwo { String getName(); }
+interface InterfaceFinal extends InterfaceOne, InterfaceTwo {}
+class ClassName implements InterfaceFinal { String getName() { return ""; } }	// will compile
+
+// interface can extend 2+ interfaces with default methods name ONLY overridding these methods
+interface InterfaceOne { default void getName() {;} }
+interface InterfaceTwo { default void getName() {;} }
+interface InterfaceFinal extends InterfaceOne, InterfaceTwo { default void getName() {;} }	// must override
+
+// can access method in superinterface using super key word
+interface InterfaceOne { default void getName() {;} }
+interface InterfaceTwo { default void getName() {;} }
+interface InterfaceFinal extends InterfaceOne, InterfaceTwo { InterfaceTwo.super.getName(); }
+
 interface InterfaceName {	// all methods and vars are implicitly public
-	static final int i;
-	static methodName(){};	// can be accessed as InterfaceName.methodName or by name of implemented class
-	default methodName(){};
+	static final int CONST = 1;	// must be initialized
+	static methodName() {};	// can be accessed as InterfaceName.methodName or by name of implemented class
+	default methodName() {};
 }
+class ClassName implements InterfaceName {
+	public methodName() {};		// must implement interface methods using public access
+}
+
+// this access to current object, super access to superClass object (both excluded static fields and methods)
+interface InterfaceName {
+	int MIN = 9999; 
+	String printFunc();
+	default void status() {
+		System.out.println(this);
+		System.out.println(this.MIN);
+		System.out.println(this.printFunc());
+	}
+}
+class ClassName implements InterfaceName {
+	public String printFunc() { return ("anyText" + this); }
+}
+InterfaceName refVal = new ClassName();
+refVal.status();	// ClassName@19e0bfd 9999 anyTextClassName@19e0bfd
+
+
+
+/* CLASSES. REFERENCE VARIABLES */
+interface InterfaceName {}
+class SuperClass {}
+class SubClass extends SuperClass implements InterfaceName {}
+class SubNewClass extends SuperClass implements InterfaceName {}
+
+// access using its own class, can access all vars and methods in SuperClass and InterfaceName
+SubClass refVar = new SubClass();	// var of type SubClass can be used to refer to its object
+
+// access using refVar of type SuperClass, cannot access vars and methods in SubClass and InterfaceName
+SuperClass refVar = new SubClass();	// reference var of type SuperClass can be used to refer to its object
+
+// access using refVar of type InterfaceName, cannot access vars and methods in SubClass and SuperClass
+InterfaceName refVar = new SubClass();	// reference var of type InterfaceName can be used
+
+// array of objects grouped by a common base class or an interface
+InterfaceName[] arr = new InterfaceName[2];
+InterfaceName[0] = new SubClass(); InterfaceName[1] = new SubNewClass();
+
+
+
+/* CLASSES. CASTING */
+interface InterfaceName { void methodName(); }
+class SuperClass {}
+class SubClass extends SuperClass implements InterfaceName { int field; void methodName() {;} }
+InterfaceName refVar = new SubClass();
+// next line will not compile, refVar is of type InterfaceName and that interface does not define field
+refVar.field = 10;
+((SubClass)refVar).field = 10;	// will compile
+
+
+
+/* CLASSES. POLYMORPHISM */
+// method with the same signature (name and method parameters)
+// works only with overridden methods (same number and type of method arguments)
 
 
 
@@ -335,5 +428,9 @@ switch() {	// char, byte, short, int, String, Integer, Short, Byte, Character, e
 }	
 
 for (int i = 0; i < arr.length(); ++i, methodName()) {}	// increment block can call methods
+
+
+
+/* LAMBDA EXPRESSIONS */
 
 
