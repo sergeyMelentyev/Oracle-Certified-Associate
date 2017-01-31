@@ -432,5 +432,49 @@ for (int i = 0; i < arr.length(); ++i, methodName()) {}	// increment block can c
 
 
 /* LAMBDA EXPRESSIONS */
+// will work only with functional interface, that defines exactly one abstruct method
+(paramName) -> paramName.methodName() >= value;
+(paramType paramName) -> { return (paramName.methodName() >= value); };
+
+interface Validate { boolean check(Emp emp); }	// functional interface with one abstruct method
+public interface Predicate<T> { boolean check(T t); }	// functional, generic interface
+
+class Emp {
+	String name; int performanceRating; double salary;
+	Emp (String nm, int r, double sl) { this.name = nm; this.performanceRating = r; this.salary = sl; }
+	String getName() { return this.name; }
+	int getPerformanceRation() { return this.performanceRating; }
+	String getSalary() { return this.salary; }
+}
+
+static void filterWithFunctional(ArrayList<Emp> list, Validate rule) {
+	for (Emp e : list)
+		if (rule.check(e))
+			System.out.println(e);
+}
+static void filterWithPredicate(ArrayList<Emp> list, Predicate<Emp> rule) {
+	for (Emp e : list)
+		if (rule.check(e))
+			System.out.println(e);
+}
+
+
+Emp e1 = new Emp("Sergey", 5, 9999.00); Emp e2 = new Emp("Olga", 6, 10000.00);
+ArrayList<Emp> arr = new ArrayList<>(); arr.add(e1); arr.add(e2);
+
+Validate validPerfor = e -> e.getPerformanceRation() >= 5;
+filterWithFunctional(arr, validPerfor);
+
+Predicate<Emp> predicate = e -> e.getPerformanceRation() >= 5;
+filterWithPredicate(arr, predicate);
+
+
+
+/* EXCEPTIONS */
+// checked exception
+
+// runtime unchecked exception
+
+// errors unchecked
 
 
